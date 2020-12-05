@@ -1,2 +1,2 @@
 # serCymruTools
-Package for analysis Ser Cymru project data
+Package for analysing Ser Cymru project data
