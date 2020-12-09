@@ -8,6 +8,7 @@
 #' @param step The number of months between each cross-validation step.
 #'
 #' @import dplyr
+#' @import rstan
 #' @import fable.prophet
 #' @import fabletools
 #' @import furrr

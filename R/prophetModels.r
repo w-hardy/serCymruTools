@@ -5,6 +5,7 @@
 #' @param data A dataframe with time as `datename` and quantity as `n`
 #'
 #' @import dplyr
+#' @import rstan
 #' @import fable.prophet
 #' @import tsibble
 #'
