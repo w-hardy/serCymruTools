@@ -1,11 +1,12 @@
 Package: serCymruTools
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Tools For Analysing GP Prescribing Data
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Will A. S. Hardy
+Maintainer: Will A. S. Hardy <will_hardy@icloud.com>
+Imports: distributional, dplyr, fable, fable.prophet, fabletools, feasts, furrr, future, purrr, tsibble
+Description: A package of tools that can be used to analyse monthly prescribing data for GPs in Wales.
+License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 7.1.1
