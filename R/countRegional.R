@@ -9,6 +9,7 @@
 #'
 #'
 #' @import dplyr
+#' @improt forcats
 #' @import tsibble
 #'
 #' @return Dataframe of units prescribed grouped by date and regional unit

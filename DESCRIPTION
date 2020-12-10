@@ -2,11 +2,30 @@ Package: serCymruTools
 Type: Package
 Title: Tools For Analysing GP Prescribing Data
 Version: 0.1.1
-Author: Will A. S. Hardy
+Authors@R: 
+    c(person(given = "Hardy",
+             family = "Will",
+             role = c("aut", "cre"),
+             email = "will_hardy@icloud.com",
+             comment = c(ORCID = "0000-0001-5227-567X")))
 Maintainer: Will A. S. Hardy <will_hardy@icloud.com>
-Imports: distributional, dplyr, fable, fable.prophet, fabletools, feasts, furrr, future, purrr, rstan, tsibble
-Description: A package of tools that can be used to analyse monthly prescribing data for GPs in Wales.
+Imports: 
+  distributional, 
+  dplyr, 
+  fable, 
+  fable.prophet, 
+  fabletools, 
+  feasts, 
+  forcats,
+  furrr, 
+  future, 
+  purrr, 
+  rstan, 
+  tsibble
+Description: A package of tools that can be used to analyse monthly prescribing 
+  data for GPs in Wales.
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
+BugReports: https://github.com/w-hardy/serCymruTools/issues
