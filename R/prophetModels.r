@@ -19,6 +19,19 @@ prophetModels <-
   function(data){
     if(!is_tsibble(data)){data <- as_tsibble(data, index = datename)}
 
+    holidays <-
+      bind_rows(tibble(holiday = "christmas",
+                       ds = as.Date(c("2016-12-25", "2017-12-25", "2018-12-25",
+                                      "2019-12-25", "2020-12-25", "2021-12-25")),
+                       lower_window = -1,
+                       upper_window = 1),
+
+                tibble(holiday = "easter", # Sunday
+                       ds = as.Date(c("2016-03-27", "2017-04-16", "2018-04-01",
+                                      "2019-04-21", "2020-04-12", "2021-04-04")),
+                       lower_window = -2,
+                       upper_window = 1))
+
     oc_prophet_model1 <-
       fable.prophet::prophet(n ~ growth("linear", n_changepoints = 0) +
                                season("year", type = "additive") +
