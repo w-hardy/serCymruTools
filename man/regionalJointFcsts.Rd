@@ -4,20 +4,18 @@
 \alias{regionalJointFcsts}
 \title{Forecasts for each regional unit}
 \usage{
-regionalJointFcsts(data, h = "5 months", keep_fits = FALSE)
+regionalJointFcsts(data, h = "5 months")
 }
 \arguments{
 \item{data}{A dataframe with time as `datename` and quantity as `n`.}
 
 \item{h}{The number of months that should forecast.}
-
-\item{keep_fits}{Logical. Should the model objects be kept. Keeping them will increase memory requirements, use with caution.}
 }
 \value{
-List of model fits and forecasts
+Model forecasts
 }
 \description{
-Various fable and prophet forecasts for monthly quantity for each regional_unit.
+Various fable and prophet forecasts for monthly quantity for each regional_unit. Can make use of plan() futures.
 }
 \examples{
 \dontrun{regionalJointFcsts(data)}
