@@ -1,6 +1,6 @@
 #' @title Cross-validated model fits
 #'
-#' @description Cross-validated fits of various fable and prophet models.
+#' @description Cross-validated fits of various fable and prophet models. Will take advantage of plan() if called outside of function.
 #'
 #' @param data A dataframe with time as `datename` and quantity as `n`.
 #' @param cv_dist The number of months that should be cross-validated.
@@ -67,7 +67,6 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       accuracy(data_test)
   }
 
-  plan(multisession) # Set up parallel processing to decrease computation time
   # Prophet models won't run with plan(multisession) so need to be run
   # sequentially. Is it worth trying to write this in Python and pass it back
   # to R?
@@ -87,7 +86,6 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
     future_map_dfr(.x =  regions,
                    .f = ~fableCV(data = filter(data, regional_unit == .x)),
                    .options = furrr_options(seed = TRUE))
-  plan(sequential) # Close the multiprocess function to prevent memory leakage
   message("fableModels() complete")
 
   bind_rows(fable_fits, prophet_fits) %>%
