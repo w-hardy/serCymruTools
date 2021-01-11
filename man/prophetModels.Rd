@@ -4,10 +4,12 @@
 \alias{prophetModels}
 \title{Prophet model fits}
 \usage{
-prophetModels(data)
+prophetModels(data, value = n)
 }
 \arguments{
 \item{data}{A dataframe with time as `datename` and quantity as `n`}
+
+\item{value}{Response variable}
 }
 \value{
 Dataframe of prophet model fits

@@ -13,7 +13,7 @@ regionalJointFits(data)
 Dataframe of model fits
 }
 \description{
-Various fable and prophet forecasts for monthly quantity for each regional_unit.
+Various fable and prophet forecasts for monthly quantity for each regional_unit. Will take advantage of plan() if called outside of function.
 }
 \examples{
 \dontrun{regionalJointFcsts(data)}

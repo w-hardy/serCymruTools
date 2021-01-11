@@ -19,7 +19,7 @@ regionalCV(data, cv_dist = 6, init = 36, step = 1)
 Dataframe of prophet model fits
 }
 \description{
-Cross-validated fits of various fable and prophet models.
+Cross-validated fits of various fable and prophet models. Will take advantage of plan() if called outside of function.
 }
 \examples{
 \dontrun{regionalCV(data)}

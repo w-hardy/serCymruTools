@@ -4,10 +4,12 @@
 \alias{fableModels}
 \title{Fable model fits}
 \usage{
-fableModels(data)
+fableModels(data, value = n)
 }
 \arguments{
 \item{data}{A dataframe with time as `datename` and quantity as `n`}
+
+\item{value}{Response variable}
 }
 \value{
 Dataframe of fable model fits
