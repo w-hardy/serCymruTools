@@ -3,7 +3,6 @@
 #' @description Fit various prophet time series models.
 #'
 #' @param data A dataframe with time as `datename` and quantity as `n`
-#' @param value Response variable
 #'
 #' @import dplyr
 #' @import rstan
@@ -17,10 +16,8 @@
 #' \dontrun{prophetModels(data)}
 #'
 prophetModels <-
-  function(data, value = n){
+  function(data){
     if(!is_tsibble(data)){data <- as_tsibble(data, index = datename)}
-
-    value <- enquo(value)
 
     holidays <-
       bind_rows(tibble(holiday = "christmas",
@@ -36,31 +33,31 @@ prophetModels <-
                        upper_window = 1))
 
     oc_prophet_model1 <-
-      fable.prophet::prophet(!!value ~ growth("linear", n_changepoints = 0) +
+      fable.prophet::prophet(n ~ growth("linear", n_changepoints = 0) +
                                season("year", type = "additive") +
                                holiday(holidays))
     oc_prophet_model2 <-
-      fable.prophet::prophet(!!value ~ growth("linear", n_changepoints = 0) +
+      fable.prophet::prophet(n ~ growth("linear", n_changepoints = 0) +
                                season("year", type = "multiplicative") +
                                holiday(holidays))
     oc_prophet_model3 <-
-      fable.prophet::prophet(!!value ~ growth("linear") +
+      fable.prophet::prophet(n ~ growth("linear") +
                                season("year", type = "additive") +
                                holiday(holidays))
     oc_prophet_model4 <-
-      fable.prophet::prophet(!!value ~ growth("linear") +
+      fable.prophet::prophet(n ~ growth("linear") +
                                season("year", type = "multiplicative") +
                                holiday(holidays))
     oc_prophet_model5 <-
-      fable.prophet::prophet(!!value ~ season("year", type = "additive") +
+      fable.prophet::prophet(n ~ season("year", type = "additive") +
                                holiday(holidays))
     oc_prophet_model6 <-
-      fable.prophet::prophet(!!value ~ season("year", type = "multiplicative") +
+      fable.prophet::prophet(n ~ season("year", type = "multiplicative") +
                                holiday(holidays))
     oc_prophet_model7 <-
-      fable.prophet::prophet(!!value ~ holiday(holidays))
+      fable.prophet::prophet(n ~ holiday(holidays))
     oc_prophet_model8 <-
-      fable.prophet::prophet(!!value)
+      fable.prophet::prophet(n)
 
     data %>%
       mutate(datename = yearmonth(datename)) %>%
