@@ -31,9 +31,6 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
 
   p <- progressr::progressor(along = regions)
 
-  progressr::handlers(global = TRUE)
-  progressr::handlers("progress")
-
   fableCV <- function(data){ # Return CV model accuracy for fableModels()
     data_test <-
       data %>%
