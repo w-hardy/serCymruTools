@@ -23,6 +23,8 @@ Imports:
   purrr, 
   rstan, 
   tsibble
+Suggests:
+  beepr
 Description: A package of tools that can be used to analyse monthly prescribing 
   data for GPs in Wales.
 License: GPL-3 | file LICENSE
