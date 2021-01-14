@@ -33,15 +33,12 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       data %>%
       mutate(datename = yearmonth(datename))
 
-    data_tr <-
-      data %>%
+    data %>%
       select(regional_unit, datename, n) %>%
       mutate(datename = yearmonth(datename)) %>%
       fill_gaps() %>%
       slice(1:(n()-cv_dist), .preserve = TRUE) %>%
-      stretch_tsibble(.init = init, .step = step)
-
-    data_tr %>%
+      stretch_tsibble(.init = init, .step = step) %>%
       fableModels() %>%
       forecast(h = cv_dist) %>%
       accuracy(data_test)
@@ -53,26 +50,17 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       data %>%
       mutate(datename = yearmonth(datename))
 
-    data_tr <-
-      data %>%
+    data %>%
       select(regional_unit, datename, n) %>%
       mutate(datename = yearmonth(datename)) %>%
       fill_gaps() %>%
       slice(1:(n()-cv_dist), .preserve = TRUE) %>%
-      stretch_tsibble(.init = init, .step = step)
-
-    data_tr %>%
+      stretch_tsibble(.init = init, .step = step) %>%
       prophetModels() %>%
       forecast(h = cv_dist) %>%
       accuracy(data_test)
   }
 
-  # Prophet models won't run with plan(multisession) so need to be run
-  # sequentially. Is it worth trying to write this in Python and pass it back
-  # to R?
-
-  # Probably worth trying the prophet::cross_validation() method. If it
-  # returns RMSE and is faster it will be useful.
   prophet_fits <-
     future_map_dfr(.x =  regions,
                    .f = ~prophetCV(data = filter(data, regional_unit == .x)),
