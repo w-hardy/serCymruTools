@@ -14,6 +14,7 @@
 #' @import furrr
 #' @import future
 #' @import tsibble
+#' @import progressr
 #'
 #' @return Dataframe of prophet model fits
 #' @export
@@ -27,6 +28,11 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
   # CV accuracy for fableModels() and prophetModels()
 
   regions <- unique(data$regional_unit) # Get unique regional_units for map()
+
+  p <- progressr::progressor(along = regions)
+
+  progressr::handlers(global = TRUE)
+  progressr::handlers("progress")
 
   fableCV <- function(data){ # Return CV model accuracy for fableModels()
     data_test <-
@@ -42,6 +48,8 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       fableModels() %>%
       forecast(h = cv_dist) %>%
       accuracy(data_test)
+
+    p(sprintf("x=%g"))
 
   }
 
@@ -59,6 +67,9 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       prophetModels() %>%
       forecast(h = cv_dist) %>%
       accuracy(data_test)
+
+    p(sprintf("x=%g"))
+
   }
 
   prophet_fits <-

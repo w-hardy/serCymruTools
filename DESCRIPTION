@@ -18,7 +18,8 @@ Imports:
   feasts, 
   forcats,
   furrr, 
-  future, 
+  future,
+  progressr,
   purrr, 
   rstan, 
   tsibble
