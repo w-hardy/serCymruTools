@@ -49,7 +49,8 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       stretch_tsibble(.init = init, .step = step) %>%
       fableModels() %>%
       forecast(h = cv_dist) %>%
-      accuracy(data_test)
+      accuracy(data_test) %>%
+      as_data_frame()
 
   }
 
@@ -71,7 +72,8 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       stretch_tsibble(.init = init, .step = step) %>%
       prophetModels() %>%
       forecast(h = cv_dist) %>%
-      accuracy(data_test)
+      accuracy(data_test) %>%
+      as_data_frame()
 
   }
 
