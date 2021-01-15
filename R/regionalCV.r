@@ -29,7 +29,7 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
 
   regions <- unique(data$regional_unit) # Get unique regional_units for map()
 
-  p <- progressr::progressor(along = regions)
+  #p <- progressr::progressor(along = regions)
 
   fableCV <- function(data){ # Return CV model accuracy for fableModels()
 
@@ -39,7 +39,7 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       data %>%
       mutate(datename = yearmonth(datename))
 
-    res <-
+    #res <-
       data %>%
       select(regional_unit, datename, n) %>%
       mutate(datename = yearmonth(datename)) %>%
@@ -51,9 +51,9 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       accuracy(data_test) %>%
       as_data_frame()
 
-    p()
+    #p()
 
-    return(res)
+    #return(res)
 
   }
 
@@ -65,7 +65,7 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       data %>%
       mutate(datename = yearmonth(datename))
 
-    res <-
+   # res <-
       data %>%
       select(regional_unit, datename, n) %>%
       mutate(datename = yearmonth(datename)) %>%
@@ -77,9 +77,9 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       accuracy(data_test) %>%
       as_data_frame()
 
-    p()
+   # p()
 
-    return(res)
+    #return(res)
 
   }
 
