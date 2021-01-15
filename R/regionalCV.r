@@ -39,9 +39,8 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       data %>%
       mutate(datename = yearmonth(datename))
 
-    p()
-
-    data %>%
+    res <-
+      data %>%
       select(regional_unit, datename, n) %>%
       mutate(datename = yearmonth(datename)) %>%
       fill_gaps() %>%
@@ -49,8 +48,11 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       stretch_tsibble(.init = init, .step = step) %>%
       fableModels() %>%
       forecast(h = cv_dist) %>%
-      accuracy(data_test) %>%
-      as_data_frame()
+      accuracy(data_test)
+
+    p()
+
+    return(res)
 
   }
 
@@ -62,9 +64,8 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       data %>%
       mutate(datename = yearmonth(datename))
 
-    p()
-
-    data %>%
+    res <-
+      data %>%
       select(regional_unit, datename, n) %>%
       mutate(datename = yearmonth(datename)) %>%
       fill_gaps() %>%
@@ -72,8 +73,11 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       stretch_tsibble(.init = init, .step = step) %>%
       prophetModels() %>%
       forecast(h = cv_dist) %>%
-      accuracy(data_test) %>%
-      as_data_frame()
+      accuracy(data_test)
+
+    p()
+
+    return(res)
 
   }
 
