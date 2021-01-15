@@ -39,6 +39,8 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       data %>%
       mutate(datename = yearmonth(datename))
 
+    p()
+
     data %>%
       select(regional_unit, datename, n) %>%
       mutate(datename = yearmonth(datename)) %>%
@@ -48,8 +50,6 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       fableModels() %>%
       forecast(h = cv_dist) %>%
       accuracy(data_test)
-
-    p()
 
   }
 
@@ -61,6 +61,8 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       data %>%
       mutate(datename = yearmonth(datename))
 
+    p()
+
     data %>%
       select(regional_unit, datename, n) %>%
       mutate(datename = yearmonth(datename)) %>%
@@ -70,8 +72,6 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       prophetModels() %>%
       forecast(h = cv_dist) %>%
       accuracy(data_test)
-
-    p()
 
   }
 
