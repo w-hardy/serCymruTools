@@ -49,8 +49,8 @@ regionalJointFcsts <- function(data, h ="5 months"){
                   ub_80 = quantile(n, .9),
                   ub_95 = quantile(n, .975),
                   sd = distributional::variance(n)^2,
-                  dist = n,
-                  n = NULL)
+                  n = NULL # Remove distribution from returned object to reduce size
+                  )
 
   return(joint_fcst)
 }
