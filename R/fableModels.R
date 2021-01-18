@@ -28,7 +28,7 @@ fableModels <-
             #ets1 = ETS(n ~ trend()),
             ets2 = ETS(n ~ trend("A") + season("A")), # Holt-Winters Additive Model
             #ets3 = ETS(n ~ trend() + season("M")),
-            arima = ARIMA(n, ic = "RMSEA", stepwise = FALSE),
+            arima = ARIMA(n, stepwise = FALSE),
             #neur_net = NNETAR(n),
             #fasster = FASSTER(n ~ season("1 year") + trend(1) + fourier(12)),
             comb1 = combination_model(TSLM(n ~ trend()),
