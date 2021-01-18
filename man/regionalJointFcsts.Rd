@@ -4,7 +4,7 @@
 \alias{regionalJointFcsts}
 \title{Forecasts for each regional unit}
 \usage{
-regionalJointFcsts(data, h = "5 months")
+regionalJointFcsts(data, h = "6 months")
 }
 \arguments{
 \item{data}{A dataframe with time as `datename` and quantity as `n`.}
