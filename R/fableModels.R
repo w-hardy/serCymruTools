@@ -44,5 +44,6 @@ fableModels <-
                                                 robust = TRUE),
                                             SNAIVE(season_adjust)),
             s_naive = SNAIVE(n),
+            s_naive_drift = SNAIVE(n ~ drift()),
             .safely = TRUE)
   }
