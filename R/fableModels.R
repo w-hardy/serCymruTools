@@ -45,5 +45,6 @@ fableModels <-
                                             SNAIVE(season_adjust)),
             s_naive = SNAIVE(n),
             s_naive_drift = SNAIVE(n ~ drift()),
-            .safely = TRUE)
+            .safely = TRUE) %>%
+      mutate(comb3 = (arima + stl_dcmp2) / 2)
   }
