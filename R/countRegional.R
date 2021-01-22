@@ -1,10 +1,10 @@
-#' @title Sumamry of prescribing volume for a regional unit
+#' @title Summary of prescribing volume for a regional unit
 #'
 #' @description Function to create tsibble object for a count of `unit` per `datename` e.g. countRegional(oc, Locality, datename, Quantity) is the `Quantity` per `datename` grouped by `Locality` from `oc`. `Quantity` is corrected for the number of days in each month.
 #'
 #' @param data A dataframe with date and unit of medicines
 #' @param region Column name of regional unit of interest (e.g., `practiceid`, `gp_cluster`)
-#' @param datename Name of the colume containing the date data
+#' @param datename Name of the column containing the date data
 #' @param unit Unit of interest (e.g., `quantity`, `items`)
 #'
 #'
