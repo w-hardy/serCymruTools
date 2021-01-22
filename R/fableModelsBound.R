@@ -1,4 +1,4 @@
-#' @title Fable model fits
+#' @title Fable model fits for bound data
 #'
 #' @description  Fit various fable time series models.
 #'

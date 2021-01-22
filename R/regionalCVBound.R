@@ -1,4 +1,4 @@
-#' @title Cross-validated model fits
+#' @title Cross-validated model fits for bound data
 #'
 #' @description Cross-validated fits of various fable and prophet models. Will take advantage of plan() if called outside of function.
 #'
@@ -23,7 +23,7 @@
 #' \dontrun{regionalCV(data)}
 #'
 
-regionalCV <- function(data, cv_dist = 6, init = 48, step = 3){
+regionalCVBound <- function(data, cv_dist = 6, init = 48, step = 3){
 
   # CV accuracy for fableModelsBound() and prophetModelsBound()
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/fableModelsBound.R
 \name{fableModelsBound}
 \alias{fableModelsBound}
-\title{Fable model fits}
+\title{Fable model fits for bound data}
 \usage{
 fableModelsBound(data, lower = 0, upper = 100)
 }

@@ -1,4 +1,4 @@
-#' @title Prophet model fits
+#' @title Prophet model fits for bound data
 #'
 #' @description Fit various prophet time series models.
 #'
@@ -17,7 +17,7 @@
 #' @examples
 #' \dontrun{prophetModelsBound(data, lower = 0, upper = 100)}
 #'
-prophetModels <-
+prophetModelsBound <-
   function(data, lower = 0, upper = 100){
     if (upper <= lower) {
       stop("lower must be less than upper")

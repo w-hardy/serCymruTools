@@ -2,8 +2,12 @@
 
 export(countRegional)
 export(fableModels)
+export(fableModelsBound)
+export(propRegional)
 export(prophetModels)
+export(prophetModelsBound)
 export(regionalCV)
+export(regionalCVBound)
 export(regionalJointFcsts)
 export(regionalJointFits)
 import(dplyr)
