@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{fableModelsBound(data, lower = 0, upper = 100)}
+#' \dontrun{fableModelsBound(data)}
 
 fableModelsBound <-
   function(data){

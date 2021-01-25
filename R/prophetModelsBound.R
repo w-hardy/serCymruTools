@@ -13,7 +13,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{prophetModelsBound(data, lower = 0, upper = 100)}
+#' \dontrun{prophetModelsBound(data)}
 #'
 prophetModelsBound <-
   function(data){
