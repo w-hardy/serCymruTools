@@ -42,7 +42,7 @@ regionalCVBound <- function(data, cv_dist = 6, init = 48, step = 3){
       fill_gaps() %>%
       slice(1:(n()-cv_dist), .preserve = TRUE) %>%
       stretch_tsibble(.init = init, .step = step) %>%
-      fableModelsBound() %>%
+      fableModelsBound(lower = 0, upper = 100) %>%
       forecast(h = cv_dist) %>%
       accuracy(data_test, list(RMSE = RMSE, MAE = MAE, MAPE = MAPE,
                                rmse_skill = skill_score(RMSE),
@@ -67,7 +67,7 @@ regionalCVBound <- function(data, cv_dist = 6, init = 48, step = 3){
       stretch_tsibble(.init = init, .step = step)
 
     data_trn %>%
-      prophetModelsBound() %>%
+      prophetModelsBound(lower = 0, upper = 100) %>%
       forecast(h = cv_dist) %>%
       accuracy(data_test, list(RMSE = RMSE, MAE = MAE, MAPE = MAPE,
                                rmse_skill = skill_score(RMSE),
