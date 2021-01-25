@@ -7,10 +7,10 @@
 #' @param upper Upper limit of admissible values
 #'
 #'Transforming data to be bound between a lower and upper limit http://www.maths.bristol.ac.uk/R/web/packages/fable/vignettes/transformations.html
-scaled_logit <- function(x, lower=0, upper=1){
+scaled_logit <- function(x, lower=0, upper=100){
   log((x-lower)/(upper-x))}
 
-inv_scaled_logit <- function(x, lower=0, upper=1){
+inv_scaled_logit <- function(x, lower=0, upper=100){
   (upper-lower)*exp(x)/(1+exp(x)) + lower}
 
 my_scaled_logit <-
