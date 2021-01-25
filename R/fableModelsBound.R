@@ -23,6 +23,16 @@ fableModelsBound <-
     if (upper <= lower) {
       stop("lower must be less than upper")
     }
+
+    scaled_logit <- function(x, lower=lower, upper=upper){
+      log((x-lower)/(upper-x))}
+
+    inv_scaled_logit <- function(x, lower=lower, upper=upper){
+      (upper-lower)*exp(x)/(1+exp(x)) + lower}
+
+    my_scaled_logit <-
+      fabletools::new_transformation(scaled_logit, inv_scaled_logit)
+
     if(!is_tsibble(data)){data <- as_tsibble(data, index = datename)}
 
     data %>%
