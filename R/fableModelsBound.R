@@ -29,7 +29,7 @@ fableModelsBound <-
       mutate(datename = yearmonth(datename)) %>%
       model(trend_model2 = TSLM(my_scaled_logit(n, lower, upper) ~ trend() + season("1 year")),
             ets2 = ETS(my_scaled_logit(n, lower, upper) ~ trend("A") + season("A")), # Holt-Winters Additive Model
-            arima = ARIMA(n, stepwise = FALSE),
+            arima = ARIMA(my_scaled_logit(n, lower, upper), stepwise = FALSE),
             comb1 = combination_model(TSLM(my_scaled_logit(n, lower, upper) ~ trend()),
                                       ETS(my_scaled_logit(n, lower, upper) ~ trend())),
             comb2 = combination_model(TSLM(my_scaled_logit(n, lower, upper) ~ trend() + season("1 year")),
@@ -37,7 +37,7 @@ fableModelsBound <-
             stl_dcmp2 = decomposition_model(STL(my_scaled_logit(n, lower, upper) ~ trend() + season("1 year"),
                                                 robust = TRUE),
                                             SNAIVE(season_adjust)),
-            s_naive = SNAIVE(n),
+            s_naive = SNAIVE(my_scaled_logit(n, lower, upper)),
             s_naive_drift = SNAIVE(my_scaled_logit(n, lower, upper) ~ drift()),
             .safely = TRUE) %>%
       mutate(comb3 = (arima + stl_dcmp2) / 2)
