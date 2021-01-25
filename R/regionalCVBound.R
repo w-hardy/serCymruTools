@@ -95,39 +95,3 @@ regionalCVBound <- function(data, cv_dist = 6, init = 48, step = 3){
     group_by(regional_unit) %>%
     arrange(RMSE, MAE)
 }
-
-regionalJointFcsts <- function(data, h ="6 months"){
-  regions <- unique(data$regional_unit)
-
-  fable_fcst <-
-    future_map_dfr(.x = regions,
-                   .f = ~fableModelsBound(filter(data, regional_unit ==.x)) %>%
-                     forecast(h = h),
-                   .options = furrr_options(seed = TRUE)) %>%
-    as_tibble()
-
-  message("fable forecasts complete")
-
-
-  prophet_fcst <-
-    future_map_dfr(.x = regions,
-                   .f = ~prophetModelsBound(filter(data, regional_unit ==.x)) %>%
-                     forecast(h = h),
-                   .options = furrr_options(seed = TRUE)) %>%
-    as_tibble()
-
-  message("prophet forecasts complete")
-
-  joint_fcst <-
-    bind_rows(fable_fcst, prophet_fcst) %>%
-    mutate(lb_95 = quantile(n, .025),
-           lb_80 = quantile(n, .1),
-           med = median(n),
-           ub_80 = quantile(n, .9),
-           ub_95 = quantile(n, .975),
-           sd = distributional::variance(n)^2,
-           n = NULL # Remove distribution from saved object
-    )
-
-  return(joint_fcst)
-}
