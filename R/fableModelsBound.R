@@ -3,8 +3,6 @@
 #' @description  Fit various fable time series models.
 #'
 #' @param data A dataframe with time as `datename` and quantity as `n`
-#' @param lower Lower limit of admissible values
-#' @param upper Upper limit of admissible values
 #'
 #' @import dplyr
 #' @import fable
@@ -19,36 +17,25 @@
 #' \dontrun{fableModelsBound(data, lower = 0, upper = 100)}
 
 fableModelsBound <-
-  function(data, lower = 0, upper = 100){
-    if (upper <= lower) {
-      stop("lower must be less than upper")
-    }
+  function(data){
 
-    scaled_logit <- function(x, lower=lower, upper=upper){
-      log((x-lower)/(upper-x))}
-
-    inv_scaled_logit <- function(x, lower=lower, upper=upper){
-      (upper-lower)*exp(x)/(1+exp(x)) + lower}
-
-    my_scaled_logit <-
-      fabletools::new_transformation(scaled_logit, inv_scaled_logit)
 
     if(!is_tsibble(data)){data <- as_tsibble(data, index = datename)}
 
     data %>%
       mutate(datename = yearmonth(datename)) %>%
-      model(trend_model2 = TSLM(my_scaled_logit(n, lower, upper) ~ trend() + season("1 year")),
-            ets2 = ETS(my_scaled_logit(n, lower, upper) ~ trend("A") + season("A")), # Holt-Winters Additive Model
-            arima = ARIMA(my_scaled_logit(n, lower, upper), stepwise = FALSE),
-            comb1 = combination_model(TSLM(my_scaled_logit(n, lower, upper) ~ trend()),
-                                      ETS(my_scaled_logit(n, lower, upper) ~ trend())),
-            comb2 = combination_model(TSLM(my_scaled_logit(n, lower, upper) ~ trend() + season("1 year")),
-                                      ETS(my_scaled_logit(n, lower, upper) ~ trend() + season("A"))),
-            stl_dcmp2 = decomposition_model(STL(my_scaled_logit(n, lower, upper) ~ trend() + season("1 year"),
+      model(trend_model2 = TSLM(my_scaled_logit(n) ~ trend() + season("1 year")),
+            ets2 = ETS(my_scaled_logit(n) ~ trend("A") + season("A")), # Holt-Winters Additive Model
+            arima = ARIMA(my_scaled_logit(n), stepwise = FALSE),
+            comb1 = combination_model(TSLM(my_scaled_logit(n) ~ trend()),
+                                      ETS(my_scaled_logit(n) ~ trend())),
+            comb2 = combination_model(TSLM(my_scaled_logit(n) ~ trend() + season("1 year")),
+                                      ETS(my_scaled_logit(n) ~ trend() + season("A"))),
+            stl_dcmp2 = decomposition_model(STL(my_scaled_logit(n) ~ trend() + season("1 year"),
                                                 robust = TRUE),
                                             SNAIVE(season_adjust)),
-            s_naive = SNAIVE(my_scaled_logit(n, lower, upper)),
-            s_naive_drift = SNAIVE(my_scaled_logit(n, lower, upper) ~ drift()),
+            s_naive = SNAIVE(my_scaled_logit(n)),
+            s_naive_drift = SNAIVE(my_scaled_logit(n) ~ drift()),
             .safely = TRUE) %>%
       mutate(comb3 = (arima + stl_dcmp2) / 2)
   }

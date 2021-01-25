@@ -3,8 +3,6 @@
 #' @description Fit various prophet time series models.
 #'
 #' @param data A dataframe with time as `datename` and quantity as `n`
-#' @param lower Lower limit of admissible values
-#' @param upper Upper limit of admissible values
 #'
 #' @import dplyr
 #' @import rstan
@@ -18,19 +16,7 @@
 #' \dontrun{prophetModelsBound(data, lower = 0, upper = 100)}
 #'
 prophetModelsBound <-
-  function(data, lower = 0, upper = 100){
-    if (upper <= lower) {
-      stop("lower must be less than upper")
-    }
-
-    scaled_logit <- function(x, lower=lower, upper=upper){
-      log((x-lower)/(upper-x))}
-
-    inv_scaled_logit <- function(x, lower=lower, upper=upper){
-      (upper-lower)*exp(x)/(1+exp(x)) + lower}
-
-    my_scaled_logit <-
-      fabletools::new_transformation(scaled_logit, inv_scaled_logit)
+  function(data){
 
     if(!is_tsibble(data)){data <- as_tsibble(data, index = datename)}
 
@@ -48,26 +34,26 @@ prophetModelsBound <-
                        upper_window = 1))
 
     oc_prophet_model1 <-
-      fable.prophet::prophet(my_scaled_logit(n, lower, upper) ~
+      fable.prophet::prophet(my_scaled_logit(n) ~
                                growth("linear", n_changepoints = 0) +
                                season("year", type = "additive") +
                                holiday(holidays))
 
     oc_prophet_model3 <-
-      fable.prophet::prophet(my_scaled_logit(n, lower, upper) ~
+      fable.prophet::prophet(my_scaled_logit(n) ~
                                growth("linear") +
                                season("year", type = "additive") +
                                holiday(holidays))
 
     oc_prophet_model5 <-
-      fable.prophet::prophet(my_scaled_logit(n, lower, upper) ~
+      fable.prophet::prophet(my_scaled_logit(n) ~
                                season("year", type = "additive") +
                                holiday(holidays))
 
     oc_prophet_model7 <-
-      fable.prophet::prophet(my_scaled_logit(n, lower, upper) ~ holiday(holidays))
+      fable.prophet::prophet(my_scaled_logit(n) ~ holiday(holidays))
     oc_prophet_model8 <-
-      fable.prophet::prophet(my_scaled_logit(n, lower, upper))
+      fable.prophet::prophet(my_scaled_logit(n))
 
     data %>%
       mutate(datename = yearmonth(datename)) %>%
