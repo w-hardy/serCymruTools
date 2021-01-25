@@ -3,6 +3,7 @@
 export(countRegional)
 export(fableModels)
 export(fableModelsBound)
+export(my_scaled_logit)
 export(propRegional)
 export(prophetModels)
 export(prophetModelsBound)

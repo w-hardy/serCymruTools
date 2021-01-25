@@ -1,6 +1,6 @@
-#' @title Helper functions
+#' @title my_scaled_logit
 #'
-#' @description Helper functions for serCymruTools
+#' @description Transforming data to be bound between a lower and upper limit http://www.maths.bristol.ac.uk/R/web/packages/fable/vignettes/transformations.html
 #'
 #' @param x Double to transform
 #' @param lower Lower limit of admissible values
@@ -8,7 +8,6 @@
 #'
 #' @export
 #'
-#'Transforming data to be bound between a lower and upper limit http://www.maths.bristol.ac.uk/R/web/packages/fable/vignettes/transformations.html
 
 my_scaled_logit <-
   fabletools::new_transformation(

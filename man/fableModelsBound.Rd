@@ -4,14 +4,10 @@
 \alias{fableModelsBound}
 \title{Fable model fits for bound data}
 \usage{
-fableModelsBound(data, lower = 0, upper = 100)
+fableModelsBound(data)
 }
 \arguments{
 \item{data}{A dataframe with time as `datename` and quantity as `n`}
-
-\item{lower}{Lower limit of admissible values}
-
-\item{upper}{Upper limit of admissible values}
 }
 \value{
 Dataframe of fable model fits
@@ -20,5 +16,5 @@ Dataframe of fable model fits
 Fit various fable time series models.
 }
 \examples{
-\dontrun{fableModelsBound(data, lower = 0, upper = 100)}
+\dontrun{fableModelsBound(data)}
 }

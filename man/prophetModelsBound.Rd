@@ -4,14 +4,10 @@
 \alias{prophetModelsBound}
 \title{Prophet model fits for bound data}
 \usage{
-prophetModelsBound(data, lower = 0, upper = 100)
+prophetModelsBound(data)
 }
 \arguments{
 \item{data}{A dataframe with time as `datename` and quantity as `n`}
-
-\item{lower}{Lower limit of admissible values}
-
-\item{upper}{Upper limit of admissible values}
 }
 \value{
 Dataframe of prophet model fits
@@ -20,6 +16,6 @@ Dataframe of prophet model fits
 Fit various prophet time series models.
 }
 \examples{
-\dontrun{prophetModelsBound(data, lower = 0, upper = 100)}
+\dontrun{prophetModelsBound(data)}
 
 }
