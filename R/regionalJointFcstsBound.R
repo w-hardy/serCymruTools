@@ -3,8 +3,6 @@
 #' @description Various fable and prophet forecasts for monthly quantity for each regional_unit. Can make use of plan() futures.
 #'
 #' @param data A dataframe with time as `datename` and quantity as `n`
-#' @param lower Lower limit of admissible values
-#' @param upper Upper limit of admissible values
 #' @param h The number of months that should forecast
 #'
 #' @importFrom distributional variance
@@ -19,14 +17,14 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{regionalJointFcsts(data, lower = 0, upper = 100, h ="6 months")}
+#' \dontrun{regionalJointFcsts(data, h ="6 months")}
 #'
-regionalJointFcstsBound <- function(data, lower = 0, upper = 100, h ="6 months"){
+regionalJointFcstsBound <- function(data, h ="6 months"){
   regions <- unique(data$regional_unit)
 
   fable_fcst <-
     future_map_dfr(.x = regions,
-                   .f = ~fableModelsBound(filter(data, lower, upper,
+                   .f = ~fableModelsBound(filter(data,
                                                  regional_unit ==.x)) %>%
                      forecast(h = h) %>% as_tibble(),
                    .options = furrr_options(seed = TRUE))
@@ -34,7 +32,7 @@ regionalJointFcstsBound <- function(data, lower = 0, upper = 100, h ="6 months")
 
   prophet_fcst <-
     future_map_dfr(.x = regions,
-                   .f = ~prophetModelsBound(filter(data, lower, upper,
+                   .f = ~prophetModelsBound(filter(data,
                                                    regional_unit ==.x)) %>%
                      forecast(h = h) %>% as_tibble(),
                    .options = furrr_options(seed = TRUE))

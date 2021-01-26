@@ -4,14 +4,10 @@
 \alias{regionalJointFcstsBound}
 \title{Bound forecasts for each regional unit}
 \usage{
-regionalJointFcstsBound(data, lower = 0, upper = 100, h = "6 months")
+regionalJointFcstsBound(data, h = "6 months")
 }
 \arguments{
 \item{data}{A dataframe with time as `datename` and quantity as `n`}
-
-\item{lower}{Lower limit of admissible values}
-
-\item{upper}{Upper limit of admissible values}
 
 \item{h}{The number of months that should forecast}
 }
@@ -22,6 +18,6 @@ Model forecasts
 Various fable and prophet forecasts for monthly quantity for each regional_unit. Can make use of plan() futures.
 }
 \examples{
-\dontrun{regionalJointFcsts(data, lower = 0, upper = 100, h ="6 months")}
+\dontrun{regionalJointFcsts(data, h ="6 months")}
 
 }
