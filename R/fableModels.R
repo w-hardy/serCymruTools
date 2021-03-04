@@ -9,6 +9,7 @@
 #' @import fabletools
 #' @import feasts
 #' @import tsibble
+#' @import fasster
 #'
 #' @return Dataframe of fable model fits
 #' @export
