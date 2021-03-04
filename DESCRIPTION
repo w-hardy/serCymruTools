@@ -15,6 +15,7 @@ Imports:
   fable, 
   fable.prophet, 
   fabletools, 
+  fasster,
   feasts, 
   forcats,
   furrr, 
