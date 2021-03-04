@@ -30,7 +30,7 @@ fableModels <-
             #ets3 = ETS(log(n) ~ trend() + season("M")),
             arima = ARIMA(log(n), stepwise = FALSE),
             #neur_net = NNETAR(log(n)),
-            #fasster = FASSTER(log(n) ~ season("1 year") + trend(1) + fourier(12)),
+            fasster = FASSTER(log(n) ~ season("1 year") + trend(1) + fourier(12)),
             comb1 = combination_model(TSLM(log(n) ~ trend()),
                                       ETS(log(n) ~ trend())),
             comb2 = combination_model(TSLM(log(n) ~ trend() + season("1 year")),
