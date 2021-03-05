@@ -36,6 +36,8 @@ fableModels <-
             stl_dcmp2 = decomposition_model(STL(log(n) ~ trend() + season("1 year"),
                                                 robust = TRUE),
                                             SNAIVE(season_adjust)),
+            naive = NAIVE(log(n)),
+            naive_drift = NAIVE(log(n) ~ drift()),
             s_naive = SNAIVE(log(n)),
             s_naive_drift = SNAIVE(log(n) ~ drift()),
             comb1 = combination_model(TSLM(log(n) ~ trend()),
