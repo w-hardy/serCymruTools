@@ -23,7 +23,7 @@
 #' \dontrun{regionalCV(data)}
 #'
 
-regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
+regionalCV <- function(data, cv_dist = 8, init = 36, step = 1){
 
   # CV accuracy for fableModels() and prophetModels()
 
@@ -44,7 +44,7 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       select(regional_unit, datename, n) %>%
       mutate(datename = yearmonth(datename)) %>%
       fill_gaps() %>%
-      slice(1:(n()-2), .preserve = TRUE) %>% # Exclude last 2 months of training data
+      slice(1:(n()-cv_dist), .preserve = TRUE) %>% # Exclude last 2 months of training data
       stretch_tsibble(.init = init, .step = step) %>%
       fableModels() %>%
       forecast(h = cv_dist) %>%
@@ -68,7 +68,7 @@ regionalCV <- function(data, cv_dist = 6, init = 36, step = 1){
       select(regional_unit, datename, n) %>%
       mutate(datename = yearmonth(datename)) %>%
       fill_gaps() %>%
-      slice(1:(n()-2), .preserve = TRUE) %>% # Exclude last 2 months of training data
+      slice(1:(n()-cv_dist), .preserve = TRUE) %>% # Exclude last 2 months of training data
       stretch_tsibble(.init = init, .step = step) %>%
       prophetModels() %>%
       forecast(h = cv_dist) %>%
