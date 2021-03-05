@@ -28,8 +28,8 @@ fableModels <-
             trend_model2 = TSLM(log(n) ~ trend() + season("1 year")),
             ets1 = ETS(log(n) ~ trend("N") + season("N")), # Simple exponential smoothing
             ets2 = ETS(log(n) ~ trend("A") + season("A")), # Holt-Winters Additive Model
-            arima_step = ARIMA(log(n)),
-            arima_search = ARIMA(log(n), stepwise = FALSE),
+            arima_step = ARIMA(log(n)), # Default stepwise method
+            arima_search = ARIMA(log(n), stepwise = FALSE), # Search larger space
             fasster = FASSTER(log(n) ~ season("1 year") + trend(1) + fourier(12)),
             stl_dcmp1 = decomposition_model(STL(log(n) ~ trend(window = 21),
                                                 robust = TRUE),
