@@ -19,7 +19,7 @@
 #' @examples
 #' \dontrun{regionalJointFcsts(data)}
 #'
-regionalJointFcsts <- function(data, h ="6 months"){
+regionalJointFcsts <- function(data, h ="8 months"){
   regions <- unique(data$regional_unit)
 
   fable_fcst <-
