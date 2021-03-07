@@ -4,7 +4,7 @@
 \alias{regionalJointFcstsBound}
 \title{Bound forecasts for each regional unit}
 \usage{
-regionalJointFcstsBound(data, h = "6 months")
+regionalJointFcstsBound(data, h = "8 months")
 }
 \arguments{
 \item{data}{A dataframe with time as `datename` and quantity as `n`}
