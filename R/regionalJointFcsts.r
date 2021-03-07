@@ -29,20 +29,19 @@ regionalJointFcsts <- function(data, h ="8 months"){
                    .options = furrr_options(seed = TRUE))
   message("fable forecasts complete, step 1/2")
 
-  prophet_fcst <-
-    future_map_dfr(.x = regions,
-                   .f = ~prophetModels(filter(data, regional_unit ==.x)) %>%
-                     forecast(h = h) %>% as_tibble(),
-                   .options = furrr_options(seed = TRUE))
-  # Some prophet forecasts are giving daily forecasts. We want monthly forecasts.
-  # This may also be influencing accuracy
-
-  message("prophet forecasts complete, step 2/2")
+  # prophet_fcst <-
+  #   future_map_dfr(.x = regions,
+  #                  .f = ~prophetModels(filter(data, regional_unit ==.x)) %>%
+  #                    forecast(h = h) %>% as_tibble(),
+  #                  .options = furrr_options(seed = TRUE))
+  #
+  # message("prophet forecasts complete, step 2/2")
   # prophetModels now being run in parallel. Needed to reinstall prophet from
   # source
 
   joint_fcst <-
-    dplyr::bind_rows(fable_fcst, prophet_fcst) %>%
+    # dplyr::bind_rows(fable_fcst, prophet_fcst) %>%
+    fable_fcst %>%
     dplyr::mutate(lb_95 = quantile(n, .025),
                   lb_80 = quantile(n, .1),
                   med = median(n),

@@ -79,11 +79,11 @@ regionalCV <- function(data, cv_dist = 8, init = 36, step = 3){
 
   }
 
-  prophet_fits <-
-    future_map_dfr(.x =  regions,
-                   .f = ~prophetCV(data = filter(data, regional_unit == .x)),
-                   .options = furrr_options(seed = TRUE))
-  message("prophetModels() complete")
+  # prophet_fits <-
+  #   future_map_dfr(.x =  regions,
+  #                  .f = ~prophetCV(data = filter(data, regional_unit == .x)),
+  #                  .options = furrr_options(seed = TRUE))
+  # message("prophetModels() complete")
 
   # Fable models will run using plan(multisession), but need to be run as below
   # with `furrr_options(seed = TRUE)` otherwise improper random numbers are
@@ -94,7 +94,8 @@ regionalCV <- function(data, cv_dist = 8, init = 36, step = 3){
                    .options = furrr_options(seed = TRUE))
   message("fableModels() complete")
 
-  bind_rows(fable_fits, prophet_fits) %>%
+  # bind_rows(fable_fits, prophet_fits) %>%
+  fable_fits %>%
     group_by(regional_unit) %>%
     arrange(RMSE, MAE)
 }
