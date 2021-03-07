@@ -23,7 +23,7 @@
 #' \dontrun{regionalCV(data)}
 #'
 
-regionalCV <- function(data, cv_dist = 8, init = 36, step = 3){
+regionalCV <- function(data, cv_dist = 8, init = 36, step = 4){
 
   # CV accuracy for fableModels() and prophetModels()
 

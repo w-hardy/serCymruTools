@@ -4,7 +4,7 @@
 \alias{regionalCVBound}
 \title{Cross-validated model fits for bound data}
 \usage{
-regionalCVBound(data, cv_dist = 8, init = 36, step = 3)
+regionalCVBound(data, cv_dist = 8, init = 36, step = 4)
 }
 \arguments{
 \item{data}{A dataframe with time as `datename` and quantity as `n`.}

@@ -30,7 +30,7 @@ fableModelsBound <-
             ets2 = ETS(my_scaled_logit(n) ~ trend("A") + season("A")), # Holt-Winters Additive Model
             arima_step = ARIMA(my_scaled_logit(n)), # Default stepwise method
             # arima_search = ARIMA(my_scaled_logit(n), stepwise = FALSE), # Search larger space
-            # fasster = FASSTER(my_scaled_logit(n) ~ season("1 year") + trend(1) + fourier(12)),
+            fasster = FASSTER(my_scaled_logit(n) ~ season("1 year") + trend(1) + fourier(12)),
             stl_dcmp1 = decomposition_model(STL(my_scaled_logit(n) ~ trend(window = 21),
                                                 robust = TRUE),
                                             NAIVE(season_adjust)),

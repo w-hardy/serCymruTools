@@ -4,7 +4,7 @@
 \alias{regionalCV}
 \title{Cross-validated model fits}
 \usage{
-regionalCV(data, cv_dist = 8, init = 36, step = 3)
+regionalCV(data, cv_dist = 8, init = 36, step = 4)
 }
 \arguments{
 \item{data}{A dataframe with time as `datename` and quantity as `n`.}
