@@ -50,5 +50,6 @@ fableModels <-
                                       decomposition_model(STL(log(n) ~ trend(window = 21),
                                                               robust = TRUE),
                                                           SNAIVE(season_adjust))),
-            .safely = TRUE)
+            .safely = TRUE) %>%
+      mutate(comb4 = (arima_step + stl_dcmp1) / 2)
   }
