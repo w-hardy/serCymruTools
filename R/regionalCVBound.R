@@ -8,15 +8,13 @@
 #' @param step The number of months between each cross-validation step.
 #'
 #' @import dplyr
-#' @import rstan
-#' @import fable.prophet
 #' @import fabletools
 #' @import furrr
 #' @import future
 #' @import tsibble
 #' @import progressr
 #'
-#' @return Dataframe of prophet model fits
+#' @return Dataframe of model fits
 #' @export
 #'
 #' @examples
@@ -51,36 +49,6 @@ regionalCVBound <- function(data, cv_dist = 8, init = 36, step = 4){
 
   }
 
-  prophetCV <- function(data){# Return CV model accuracy for prophetModelsBound()
-    x <- data$regional_unit
-
-    data_test <-
-      data %>%
-      mutate(datename = yearmonth(datename))
-
-    data_trn <-
-      data %>%
-      select(regional_unit, datename, n) %>%
-      mutate(datename = yearmonth(datename)) %>%
-      fill_gaps() %>%
-      slice(1:(n()-cv_dist), .preserve = TRUE) %>%
-      stretch_tsibble(.init = init, .step = step)
-
-    data_trn %>%
-      prophetModelsBound() %>%
-      forecast(h = cv_dist) %>%
-      accuracy(data_test, list(RMSE = RMSE, MAE = MAE, MAPE = MAPE,
-                               rmse_skill = skill_score(RMSE),
-                               crps_skill = skill_score(CRPS), ACF1 =ACF1,
-                               winkler = winkler_score))
-
-  }
-
-  # prophet_fits <-
-  #   future_map_dfr(.x =  regions,
-  #                  .f = ~prophetCV(data = filter(data, regional_unit == .x)),
-  #                  .options = furrr_options(seed = TRUE))
-  # message("prophetModelsBound() complete")
 
   # Fable models will run using plan(cluster), but need to be run as below
   # with `furrr_options(seed = TRUE)` otherwise improper random numbers are
@@ -89,9 +57,8 @@ regionalCVBound <- function(data, cv_dist = 8, init = 36, step = 4){
     future_map_dfr(.x =  regions,
                    .f = ~fableCV(data = filter(data, regional_unit == .x)),
                    .options = furrr_options(seed = TRUE))
-  message("fableModelsBound() complete")
+  message("fableModelsBound complete")
 
-  # bind_rows(fable_fits, prophet_fits) %>%
   fable_fits %>%
     group_by(regional_unit) %>%
     arrange(RMSE, MAE)

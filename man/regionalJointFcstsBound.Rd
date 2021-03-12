@@ -15,7 +15,7 @@ regionalJointFcstsBound(data, h = "8 months")
 Model forecasts
 }
 \description{
-Various fable and prophet forecasts for monthly quantity for each regional_unit. Can make use of plan() futures.
+Various fable forecasts for monthly quantity for each regional_unit. Can make use of plan() futures.
 }
 \examples{
 \dontrun{regionalJointFcsts(data, h ="6 months")}

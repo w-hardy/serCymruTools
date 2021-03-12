@@ -16,7 +16,7 @@ regionalCVBound(data, cv_dist = 8, init = 36, step = 4)
 \item{step}{The number of months between each cross-validation step.}
 }
 \value{
-Dataframe of prophet model fits
+Dataframe of model fits
 }
 \description{
 Cross-validated fits of various fable and prophet models. Will take advantage of plan() if called outside of function.

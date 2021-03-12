@@ -1,6 +1,6 @@
 #' @title Forecasts for each regional unit
 #'
-#' @description Various fable and prophet forecasts for monthly quantity for each regional_unit. Can make use of plan() futures.
+#' @description Various fable forecasts for monthly quantity for each regional_unit. Can make use of plan() futures.
 #'
 #' @param data A dataframe with time as `datename` and quantity as `n`.
 #' @param h The number of months that should forecast.
@@ -29,18 +29,8 @@ regionalJointFcsts <- function(data, h ="8 months"){
                    .options = furrr_options(seed = TRUE))
   message("fable forecasts complete, step 1/2")
 
-  # prophet_fcst <-
-  #   future_map_dfr(.x = regions,
-  #                  .f = ~prophetModels(filter(data, regional_unit ==.x)) %>%
-  #                    forecast(h = h) %>% as_tibble(),
-  #                  .options = furrr_options(seed = TRUE))
-  #
-  # message("prophet forecasts complete, step 2/2")
-  # prophetModels now being run in parallel. Needed to reinstall prophet from
-  # source
 
   joint_fcst <-
-    # dplyr::bind_rows(fable_fcst, prophet_fcst) %>%
     fable_fcst %>%
     dplyr::mutate(lb_95 = quantile(n, .025),
                   lb_80 = quantile(n, .1),

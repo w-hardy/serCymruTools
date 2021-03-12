@@ -24,15 +24,5 @@ regionalJointFits <-
                      .options = furrr_options(seed = TRUE))
     message("fable fits complete")
 
-
-    prophet_fit <-
-      future_map_dfr(.x = regions,
-              .f = ~prophetModels(filter(data, regional_unit == .x)),
-              .options = furrr_options(seed = TRUE))
-    message("prophet fits complete")
-
-    joint_fit <-
-      left_join(fable_fit, prophet_fit, by = "regional_unit")
-
-    return(joint_fit)
+    return(fable_fit)
   }

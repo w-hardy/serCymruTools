@@ -2,6 +2,8 @@
 #'
 #' @description Rank models according to rmse and winkler scores
 #'
+#' @importFrom stats na.omit
+#'
 #' @param data Tibble of model accuracies including rmse and winkler
 #'
 #' @export
