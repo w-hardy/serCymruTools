@@ -60,6 +60,6 @@ regionalCVBound <- function(data, cv_dist = 8, init = 36, step = 4){
   message("fableModelsBound complete")
 
   fable_fits %>%
-    group_by(regional_unit) %>%
+    # group_by(regional_unit) %>%
     arrange(RMSE, MAE)
 }

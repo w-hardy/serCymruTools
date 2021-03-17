@@ -62,6 +62,6 @@ regionalCV <- function(data, cv_dist = 8, init = 36, step = 3){
   message("fableModels complete")
 
   fable_fits %>%
-    group_by(regional_unit) %>%
+    # group_by(regional_unit) %>%
     arrange(RMSE, MAE)
 }
