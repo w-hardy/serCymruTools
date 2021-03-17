@@ -59,9 +59,7 @@ regionalCVBound <- function(data, cv_dist = 8, init = 36, step = 4){
                    .options = furrr_options(seed = TRUE))
   message("fableModelsBound complete")
 
-
-  fable_fits #%>%
-    # group_by(regional_unit) %>%
-    # arrange(RMSE, MAE)
-
+  fable_fits %>%
+    group_by(regional_unit) %>%
+    arrange(RMSE, MAE)
 }
