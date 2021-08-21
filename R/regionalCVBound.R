@@ -49,7 +49,9 @@ regionalCVBound <- function(data, cv_dist = 8, init = 36, step = 4){
                                rmse_skill = skill_score(RMSE),
                                crps_skill = skill_score(CRPS), ACF1 =ACF1,
                                winkler = winkler_score)) %>%
-      summarise(across(where(is.numeric), mean))
+      group_by(regional_unit, .model) %>%
+      summarise(regional_unit = regional_unit,
+                across(where(is.numeric), mean), .groups = "keep")
 
   }
 
