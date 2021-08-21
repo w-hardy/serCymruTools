@@ -53,6 +53,7 @@ regionalCV <- function(data, cv_dist = 8, init = 36, step = 3){
                                winkler = winkler_score)) %>%
       group_by(regional_unit, .model) %>%
       summarise(regional_unit = regional_unit,
+                .type = "Test",
                 across(where(is.numeric), mean), .groups = "keep")
 
   }
