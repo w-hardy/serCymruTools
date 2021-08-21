@@ -37,7 +37,7 @@ regionalJointFcstsBound <- function(data, h ="8 months"){
                   med = median(n),
                   ub_80 = quantile(n, .9),
                   ub_95 = quantile(n, .975),
-                  sd = distributional::variance(n)^2,
+                  sd = distributional::variance(n)^.5,
                   n = NULL # Remove distribution from returned object to reduce size
                   )
 
