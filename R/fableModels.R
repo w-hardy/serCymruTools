@@ -29,7 +29,6 @@ fableModels <-
             ets1 = ETS(log(n) ~ trend("N") + season("N")), # Simple exponential smoothing
             ets2 = ETS(log(n) ~ trend("A") + season("A")), # Holt-Winters Additive Model
             arima_step = ARIMA(log(n)), # Default stepwise method
-            # arima_search = ARIMA(log(n), stepwise = FALSE), # Search larger space
             fasster = FASSTER(log(n) ~ season("1 year") + trend(1) + fourier(12)),
             stl_dcmp1 = decomposition_model(STL(log(n) ~ trend(window = 21),
                                                 robust = TRUE),
@@ -41,15 +40,12 @@ fableModels <-
             naive = NAIVE(log(n)),
             naive_drift = NAIVE(log(n) ~ drift()),
             s_naive = SNAIVE(log(n) ~ lag("year")),
-            s_naive_drift = SNAIVE(log(n) ~ lag("year") + drift()),
-            comb1 = combination_model(TSLM(log(n) ~ trend()),
-                                      ETS(log(n) ~ trend("N") + season("N"))),
-            comb2 = combination_model(TSLM(log(n) ~ trend() + season("1 year")),
-                                      ETS(log(n) ~ trend("A") + season("A"))),
-            comb3 = combination_model(ARIMA(log(n), stepwise = FALSE),
-                                      decomposition_model(STL(log(n) ~ trend(window = 21),
-                                                              robust = TRUE),
-                                                          SNAIVE(season_adjust))),
-            .safely = TRUE) %>%
-      mutate(comb4 = (arima_step + stl_dcmp1) / 2)
+            s_naive_drift = SNAIVE(log(n) ~ lag("year") + drift())) %>%
+      mutate(
+        comb1 = (trend_model1 + ets1) / 2,
+        comb2 = (trend_model2 + ets2) / 2,
+        comb3 = (arima_step + stl_dcmp1) / 2,
+        comb4 = (arima_step + stl_dcmp2) / 2,
+        comb5 = (arima_step + stl_dcmp2 + s_naive_drift) / 3,
+        comb6 = (arima_step + fasster) / 2)
   }
