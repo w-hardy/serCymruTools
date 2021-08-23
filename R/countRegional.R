@@ -26,7 +26,7 @@ countRegional <- function(data, region, datename = datename, unit = Quantity){
   data %>%
     mutate(regional_unit = as_factor(set_names(!!region))) %>%
     group_by(regional_unit, !!datename) %>%
-    summarise(n = sum(!!unit)) %>%
+    summarise(n = sum(!!unit, na.rm = TRUE)) %>%
     ungroup() %>%
     as_tsibble(index = !!datename, key = regional_unit)
 }
