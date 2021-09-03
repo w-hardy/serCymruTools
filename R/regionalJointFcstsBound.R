@@ -26,7 +26,7 @@ regionalJointFcstsBound <- function(data, h ="8 months"){
     future_map_dfr(.x = regions,
                    .f = ~fableModelsBound(filter(data,
                                                  regional_unit ==.x)) %>%
-                     generate(h = cv_dist, times = 1000) %>%
+                     generate(h = h, times = 1000) %>%
                      as_tibble() %>%
                      group_by(datename, .model) %>%
                      summarise(dist = distributional::dist_sample(list(.sim))) %>%
