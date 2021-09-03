@@ -30,7 +30,7 @@ regionalJointFcsts <- function(data, h ="8 months"){
                      group_by(datename, .model) %>%
                      summarise(regional_unit, dist = distributional::dist_sample(list(.sim))) %>%
                      ungroup() %>%
-                     as_fable(index = datename, key = .model, distribution = dist, response = "n") %>%
+                     # as_fable(index = datename, key = .model, distribution = dist, response = "n") %>%
                      as_tibble(),
                    .options = furrr_options(seed = TRUE))
   message("fable forecasts complete, step 1/2")
