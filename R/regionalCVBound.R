@@ -41,12 +41,8 @@ regionalCVBound <- function(data, cv_dist = 8, init = 36, step = 1){
       slice(1:(n()-cv_dist), .preserve = TRUE) %>%
       stretch_tsibble(.init = init, .step = step) %>%
       fableModelsBound() %>%
-      generate(h = cv_dist, times = 1000) %>%
-      as_tibble() %>%
-      group_by(datename, .model) %>%
-      summarise(dist = distributional::dist_sample(list(.sim))) %>%
-      ungroup() %>%
-      as_fable(index = datename, key = .model, distribution = dist, response = "n") %>%      group_by(.id) %>%
+      forecast(h = cv_dist) %>%
+      group_by(.id) %>%
       mutate(h = .id) %>%
       ungroup() %>%
       accuracy(data_test, list(RMSE = RMSE, MAE = MAE, MAPE = MAPE,

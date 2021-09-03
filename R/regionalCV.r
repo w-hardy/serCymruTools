@@ -43,12 +43,7 @@ regionalCV <- function(data, cv_dist = 8, init = 36, step = 3){
       slice(1:(n()-cv_dist), .preserve = TRUE) %>% # Exclude last 2 months of training data
       stretch_tsibble(.init = init, .step = step) %>%
       fableModels() %>%
-      generate(h = cv_dist, times = 1000) %>%
-      as_tibble() %>%
-      group_by(datename, .model) %>%
-      summarise(dist = distributional::dist_sample(list(.sim))) %>%
-      ungroup() %>%
-      as_fable(index = datename, key = .model, distribution = dist, response = "n") %>%
+      forecast(h = cv_dist) %>%
       group_by(.id) %>%
       mutate(h = .id) %>%
       ungroup() %>%
