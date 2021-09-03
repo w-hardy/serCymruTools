@@ -41,14 +41,12 @@ fableModelsBound <-
             naive = NAIVE(my_scaled_logit(n)),
             naive_drift = NAIVE(my_scaled_logit(n) ~ drift()),
             s_naive = SNAIVE(my_scaled_logit(n) ~ lag("year")),
-            s_naive_drift = SNAIVE(my_scaled_logit(n) ~ lag("year") + drift()),
-            comb1 = combination_model(TSLM(my_scaled_logit(n) ~ trend()),
-                                      ETS(my_scaled_logit(n) ~ trend("N") + season("N"))),
-            comb2 = combination_model(TSLM(my_scaled_logit(n) ~ trend() + season("1 year")),
-                                      ETS(my_scaled_logit(n) ~ trend("A") + season("A"))),
-            comb3 = combination_model(ARIMA(my_scaled_logit(n), stepwise = FALSE),
-                                      decomposition_model(STL(my_scaled_logit(n) ~ trend(window = 21),
-                                                              robust = TRUE),
-                                                          SNAIVE(season_adjust))),
-            .safely = TRUE)
+            s_naive_drift = SNAIVE(my_scaled_logit(n) ~ lag("year") + drift())) %>%
+      mutate(
+        comb1 = (trend_model1 + ets1) / 2,
+        comb2 = (trend_model2 + ets2) / 2,
+        comb3 = (arima_step + stl_dcmp1) / 2,
+        comb4 = (arima_step + stl_dcmp2) / 2,
+        comb5 = (arima_step + stl_dcmp2 + s_naive_drift) / 3,
+        comb6 = (arima_step + fasster) / 2)
   }

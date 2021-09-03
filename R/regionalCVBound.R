@@ -21,7 +21,7 @@
 #' \dontrun{regionalCV(data)}
 #'
 
-regionalCVBound <- function(data, cv_dist = 8, init = 36, step = 4){
+regionalCVBound <- function(data, cv_dist = 8, init = 36, step = 1){
 
   # CV accuracy for fableModelsBound() and prophetModelsBound()
 
@@ -41,11 +41,22 @@ regionalCVBound <- function(data, cv_dist = 8, init = 36, step = 4){
       slice(1:(n()-cv_dist), .preserve = TRUE) %>%
       stretch_tsibble(.init = init, .step = step) %>%
       fableModelsBound() %>%
-      forecast(h = cv_dist) %>%
+      generate(h = cv_dist, times = 1000) %>%
+      as_tibble() %>%
+      group_by(datename, .model) %>%
+      summarise(dist = distributional::dist_sample(list(.sim))) %>%
+      ungroup() %>%
+      as_fable(index = datename, key = .model, distribution = dist, response = "n") %>%      group_by(.id) %>%
+      mutate(h = .id) %>%
+      ungroup() %>%
       accuracy(data_test, list(RMSE = RMSE, MAE = MAE, MAPE = MAPE,
                                rmse_skill = skill_score(RMSE),
                                crps_skill = skill_score(CRPS), ACF1 =ACF1,
-                               winkler = winkler_score))
+                               winkler = winkler_score)) %>%
+      group_by(regional_unit, .model) %>%
+      summarise(regional_unit = regional_unit,
+                .type = "Test",
+                across(where(is.numeric), mean), .groups = "keep")
 
   }
 

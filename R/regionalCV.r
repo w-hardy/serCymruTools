@@ -36,18 +36,30 @@ regionalCV <- function(data, cv_dist = 8, init = 36, step = 3){
       data %>%
       mutate(datename = yearmonth(datename))
 
-      data %>%
+    data %>%
       select(regional_unit, datename, n) %>%
       mutate(datename = yearmonth(datename)) %>%
       fill_gaps() %>%
       slice(1:(n()-cv_dist), .preserve = TRUE) %>% # Exclude last 2 months of training data
       stretch_tsibble(.init = init, .step = step) %>%
       fableModels() %>%
-      forecast(h = cv_dist) %>%
+      generate(h = cv_dist, times = 1000) %>%
+      as_tibble() %>%
+      group_by(datename, .model) %>%
+      summarise(dist = distributional::dist_sample(list(.sim))) %>%
+      ungroup() %>%
+      as_fable(index = datename, key = .model, distribution = dist, response = "n") %>%
+      group_by(.id) %>%
+      mutate(h = .id) %>%
+      ungroup() %>%
       accuracy(data_test, list(RMSE = RMSE, MAE = MAE, MAPE = MAPE,
                                rmse_skill = skill_score(RMSE),
                                crps_skill = skill_score(CRPS), ACF1 =ACF1,
-                               winkler = winkler_score))
+                               winkler = winkler_score)) %>%
+      group_by(regional_unit, .model) %>%
+      summarise(regional_unit = regional_unit,
+                .type = "Test",
+                across(where(is.numeric), mean), .groups = "keep")
 
   }
 

@@ -13,8 +13,6 @@ rankModels <-
   function(data){
     data %>%
       na.omit() %>%
-      dplyr::mutate(rmse_rank = rank(RMSE),
-                    winkler_rank = rank(winkler),
-                    rank = (rmse_rank + winkler_rank)/2) %>%
+      dplyr::mutate(rank = rank(RMSE)) %>%
       dplyr::arrange(rank)
   }
