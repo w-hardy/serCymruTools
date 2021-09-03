@@ -25,7 +25,7 @@ regionalJointFcsts <- function(data, h ="8 months"){
   fable_fcst <-
     future_map_dfr(.x = regions,
                    .f = ~fableModels(filter(data, regional_unit ==.x)) %>%
-                     generate(h = cv_dist, times = 1000) %>%
+                     generate(h = h, times = 1000) %>%
                      as_tibble() %>%
                      group_by(datename, .model) %>%
                      summarise(dist = distributional::dist_sample(list(.sim))) %>%
@@ -38,12 +38,12 @@ regionalJointFcsts <- function(data, h ="8 months"){
 
   joint_fcst <-
     fable_fcst %>%
-    dplyr::mutate(lb_95 = quantile(sample, .025),
-                  lb_80 = quantile(sample, .1),
-                  med = median(sample),
-                  ub_80 = quantile(sample, .9),
-                  ub_95 = quantile(sample, .975),
-                  sd = distributional::variance(sample)^.5,
+    dplyr::mutate(lb_95 = quantile(dist, .025),
+                  lb_80 = quantile(dist, .1),
+                  med = median(dist),
+                  ub_80 = quantile(dist, .9),
+                  ub_95 = quantile(dist, .975),
+                  sd = distributional::variance(dist)^.5,
                   n = NULL # Remove distribution from returned object to reduce size
                   )
 
