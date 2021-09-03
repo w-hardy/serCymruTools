@@ -47,5 +47,6 @@ fableModels <-
         comb3 = (arima_step + stl_dcmp1) / 2,
         comb4 = (arima_step + stl_dcmp2) / 2,
         comb5 = (arima_step + stl_dcmp2 + s_naive_drift) / 3,
-        comb6 = (arima_step + fasster) / 2)
+        #comb6 = (arima_step + fasster) / 2
+        )
   }
