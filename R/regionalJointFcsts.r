@@ -28,7 +28,7 @@ regionalJointFcsts <- function(data, h ="8 months"){
                      generate(h = h, times = 1000) %>%
                      as_tibble() %>%
                      group_by(datename, .model) %>%
-                     summarise(dist = distributional::dist_sample(list(.sim))) %>%
+                     summarise(regional_unit, dist = distributional::dist_sample(list(.sim))) %>%
                      ungroup() %>%
                      as_fable(index = datename, key = .model, distribution = dist, response = "n") %>%
                      as_tibble(),
