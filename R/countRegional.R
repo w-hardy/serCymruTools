@@ -1,4 +1,3 @@
-
 #' @title Summary of prescribing volume for a regional unit
 #'
 #' @description Function to create tsibble object for a count of `unit` per `datename` e.g. countRegional(oc, Locality, datename, Quantity) is the `Quantity` per `datename` grouped by `Locality` from `oc`. `Quantity` is corrected for the number of days in each month.
