@@ -22,7 +22,8 @@ Imports:
   janitor,
   progressr,
   purrr, 
-  tsibble
+  tsibble,
+  urca
 Description: A package of tools that can be used to analyse monthly prescribing 
   data for GPs in Wales.
 License: GPL-3 | file LICENSE

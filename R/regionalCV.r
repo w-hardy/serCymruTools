@@ -13,6 +13,7 @@
 #' @import future
 #' @import tsibble
 #' @import progressr
+#' @import urca
 #'
 #' @return Dataframe of model fits
 #' @export

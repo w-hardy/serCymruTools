@@ -12,6 +12,7 @@
 #' @import future
 #' @importFrom stats median quantile
 #' @import tsibble
+#' @import urca
 #'
 #' @return Model forecasts
 #' @export
