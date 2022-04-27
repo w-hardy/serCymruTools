@@ -46,6 +46,7 @@ regionalCVBound <- function(data, cv_dist = 8, init = 36, step = 1){
       group_by(.id) %>%
       mutate(h = .id) %>%
       ungroup() %>%
+      as_fable(response = "n", distribution = n, point_forecast = .median) %>%
       accuracy(data_test, list(RMSE = RMSE, MAE = MAE, MAPE = MAPE,
                                rmse_skill = skill_score(RMSE),
                                crps_skill = skill_score(CRPS), ACF1 =ACF1,
